@@ -97,10 +97,7 @@
      * @returns {*}
      */
     function defineSuperIfNeeded(obj, f, sup) {
-        if (typeof f !== "function") {
-            throw new TypeError("Bad function");
-        }
-        if (f.__superDefined) {
+        if (typeof f !== "function" || f.__superDefined) {
             return f;
         }
 
@@ -146,6 +143,7 @@
                 return r;
             };
         }
+        g.__superNested = f;
         g.__superDefined = true;
         if (f === obj) {
             obj = g;
@@ -169,6 +167,9 @@
                         this.__super = _super;
 
                         Object.getOwnPropertyNames(sup.prototype).forEach(function (prop) {
+                            if (prop === "$super") {
+                                return;
+                            }
                             var desc = Object.getOwnPropertyDescriptor(sup.prototype, prop);
 
                             if ("value" in desc) {

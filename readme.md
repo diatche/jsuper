@@ -18,7 +18,7 @@ Documentation coming soon!
 
 ### Performance
 
-***Case: No super***
+***Case: No super calls***
 
 Operations/second: N
 
@@ -31,14 +31,18 @@ for (var i = 0; i < M; i++) {
 // N = time / M
 ```
 
-***Case Single super call***
+***Case: Single super call***
 
 Operations/second: 0.7 * N
 
 ```js
+// Tell JSHint to expect a global variable
 /* global $super */
 
-var F1 = JSuper(function _F1() {
+var jsuper = require('jsuper');
+    util = require('util');
+
+var F1 = jsuper(function _F1() {
     $super();
 });
 util.inherits(F1, F);
@@ -49,12 +53,12 @@ for (var i = 0; i < M; i++) {
 // N = time / M
 ```
 
-***Case Nested super call***
+***Case: Nested super call***
 
 Operations/second: 0.3 * N
 
 ```js
-var F2 = JSuper(function _F2() {
+var F2 = jsuper(function _F2() {
     $super();
 });
 util.inherits(F2, F1);

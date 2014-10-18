@@ -9,7 +9,7 @@
     'use strict';
 
     var should = require("should"),
-        JSuper = require('../index.js'),
+        jsuper = require('../index.js'),
         Promise = require("promise"),
         counter = {},
         obj;
@@ -103,20 +103,20 @@
         });
     });
 
-    describe('JSuper()', function() {
+    describe('jsuper()', function() {
         function NoJSuper() {
             counter.NoJSuper += 1;
             return this;
         }
         it('constructors should call specified super constructors using $super variable', function() {
-            var CallsJSuper = JSuper(function _CallsJSuper() {
+            var CallsJSuper = jsuper(function _CallsJSuper() {
                 this.should.be.instanceOf(CallsJSuperX2);
                 $super();
                 counter.CallsJSuper += 1;
             }, NoJSuper);
             inherits(CallsJSuper, NoJSuper);
 
-            var CallsJSuperX2 = JSuper(function _CallsJSuperX2() {
+            var CallsJSuperX2 = jsuper(function _CallsJSuperX2() {
                 this.should.be.instanceOf(CallsJSuperX2);
                 $super();
                 counter.CallsJSuperX2 += 1;
@@ -131,13 +131,13 @@
             counter.NoJSuper.should.be.exactly(1);
         });
         it('constructors should not call skipped super constructors using $super variable', function() {
-            var CallsJSuper = JSuper(function CallsJSuper() {
+            var CallsJSuper = jsuper(function CallsJSuper() {
                 counter.CallsJSuper += 1;
                 $super();
             }, NoJSuper);
             inherits(CallsJSuper, NoJSuper);
 
-            var CallsJSuperX2 = JSuper(function CallsJSuperX2() {
+            var CallsJSuperX2 = jsuper(function CallsJSuperX2() {
                 counter.CallsJSuperX2 += 1;
                 $super.$super();
             }, CallsJSuper);
@@ -152,14 +152,14 @@
 
         it('constructors should call specified super constructors using $super argument', function() {
             /** @function */
-            var CallsJSuper = JSuper(function _CallsJSuper($super) {
+            var CallsJSuper = jsuper(function _CallsJSuper($super) {
                 this.should.be.instanceOf(CallsJSuperX2);
                 $super();
                 counter.CallsJSuper += 1;
             }, NoJSuper);
             inherits(CallsJSuper, NoJSuper);
 
-            var CallsJSuperX2 = JSuper(function _CallsJSuperX2($super) {
+            var CallsJSuperX2 = jsuper(function _CallsJSuperX2($super) {
                 this.should.be.instanceOf(CallsJSuperX2);
                 $super();
                 counter.CallsJSuperX2 += 1;
@@ -174,13 +174,13 @@
             counter.NoJSuper.should.be.exactly(1);
         });
         it('constructors should not call skipped super constructors using $super argument', function() {
-            var CallsJSuper = JSuper(function CallsJSuper($super) {
+            var CallsJSuper = jsuper(function CallsJSuper($super) {
                 counter.CallsJSuper += 1;
                 $super();
             }, NoJSuper);
             inherits(CallsJSuper, NoJSuper);
 
-            var CallsJSuperX2 = JSuper(function CallsJSuperX2($super) {
+            var CallsJSuperX2 = jsuper(function CallsJSuperX2($super) {
                 counter.CallsJSuperX2 += 1;
                 $super.$super();
             }, CallsJSuper);
